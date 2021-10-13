@@ -49,8 +49,7 @@ EEG = [];
 if nargin < 2
     Arg.filename = [];
 else
-%     Arg = cell2struct(varargin(2:2:end), varargin(1:2:end - 1), 2);
-    Arg = struct( varargin{ : } );
+    Arg = cell2struct(varargin(2:2:end), varargin(1:2:end - 1), 2);
 end
 
 if ~isfield( Arg, 'filename' ) || isempty( Arg.filename )
