@@ -155,29 +155,25 @@ for iEvt = 1:length(EEG.event)
 end
 
 % Boundary events
-if length(Raw.RECORDINGS) > 2
+for iRec = 1:length( Raw.RECORDINGS )
+    if Raw.RECORDINGS( iRec ).state == 1
 
-    for iRec = 1:length( Raw.RECORDINGS )
-        if Raw.RECORDINGS( iRec ).state == 1
-            
-            EEG.event( end + 1 ).type = 'boundary';
-            EEG.event( end ).latency = find(timeArray >= double(Raw.RECORDINGS( iRec ).time), 1);
-            EEG.event( end ).eye = 1;
+        EEG.event( end + 1 ).type = 'boundary';
+        EEG.event( end ).latency = find(timeArray >= double(Raw.RECORDINGS( iRec ).time), 1);
+        EEG.event( end ).eye = 1;
 
-            EEG.event( end + 1 ).type = 'STARTREC';
-            EEG.event( end ).latency = find(timeArray >= double(Raw.RECORDINGS( iRec ).time), 1);
-            EEG.event( end ).eye = 1;
+        EEG.event( end + 1 ).type = 'STARTREC';
+        EEG.event( end ).latency = find(timeArray >= double(Raw.RECORDINGS( iRec ).time), 1);
+        EEG.event( end ).eye = 1;
 
-        elseif Raw.RECORDINGS( iRec ).state == 0
-            
-            EEG.event( end + 1 ).type = 'ENDREC';
-            EEG.event( end ).latency = find(timeArray <= double(Raw.RECORDINGS( iRec ).time), 1, 'last');
-            EEG.event( end ).eye = 1;
+    elseif Raw.RECORDINGS( iRec ).state == 0
 
-        end
+        EEG.event( end + 1 ).type = 'ENDREC';
+        EEG.event( end ).latency = find(timeArray <= double(Raw.RECORDINGS( iRec ).time), 1, 'last');
+        EEG.event( end ).eye = 1;
 
     end
-    
+
 end
 
 % Remove events with empty latency
